@@ -1,0 +1,4 @@
+mongoengine
+django
+requests
+pyquery

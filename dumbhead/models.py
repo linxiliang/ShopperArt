@@ -1,19 +1,30 @@
 """Shopper Art Models."""
 import datetime
 from mongoengine import (
-    Document, StringField, connect, DateTimeField, FloatField)
-from shopperart.settings import DBNAME
+    Document, StringField, connect, DateTimeField, FloatField,
+    BooleanField)
+from django.conf import settings
 
-connect(DBNAME)
+connect(settings.DBNAME)
+
+
+class Category(Document):
+    """Product category."""
+
+    cid = StringField(max_length=20, required=True)
+    name = StringField(max_length=256, required=True)
+    searched = BooleanField(default=False)
 
 
 class Product(Document):
     """Standard product info."""
 
-    pid = StringField(max_length=20, required=True)
-    title = StringField(max_length=256, required=True)
+    pid = StringField(max_length=20, required=True, primary_key=True)
+    cid = StringField(max_length=20, required=True)
+    upc = StringField(max_length=20, required=True)
+    name = StringField(max_length=256, required=True)
     image = StringField(max_length=256, required=True)
-    shortDescription = StringField(max_length=256, required=True)
+    shortDescription = StringField(max_length=512)
     create_time = DateTimeField(default=datetime.datetime.now)
 
 
