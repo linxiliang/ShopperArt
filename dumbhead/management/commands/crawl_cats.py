@@ -1,4 +1,5 @@
 """Script for crawling cats from Best Buy."""
+import time
 import requests
 from django.core.management.base import BaseCommand
 from dumbhead.models import Category
@@ -23,6 +24,9 @@ class Command(BaseCommand):
             url = HOST + PARAM.format(key=KEY, size=SIZE, num=num)
             print('=====>', url)
             data = requests.get(url).json()
+            if 'fault' in data or 'error' in data:
+                print('---->', data)
+                continue
             total_num = data['totalPages']
             for cat_data in data['categories']:
                 if 'name' not in cat_data or not cat_data['name']:
@@ -35,3 +39,5 @@ class Command(BaseCommand):
                     record.name = cat_data['name']
                     record.save()
             num += 1
+            if num % 2 == 0:
+                time.sleep(1)
