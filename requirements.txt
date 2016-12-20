@@ -2,3 +2,4 @@ mongoengine
 django
 requests
 pyquery
+djangorestframework
