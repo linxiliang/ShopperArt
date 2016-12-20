@@ -22,7 +22,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         """Handle command."""
         pids = []
-        for index, product in enumerate(Product.objects.all()):
+        products = list(Product.objects.all())
+        for index, product in enumerate(products):
             if index % 10 == 0 and pids:
                 print('getting====>', pids)
                 self.get_products_price(pids)
