@@ -21,7 +21,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         """Handle command."""
-        cats = Category.objects.all()
+        cats = Category.objects.filter(searched=False)
         for cat in cats:
             print('getting====>', cat.to_json())
             self.get_products_cat(cat.cid)
@@ -46,7 +46,8 @@ class Command(BaseCommand):
             for product in data['products']:
                 cur_data = {key: product[key] for key in ATTRIBUTES[1:]}
                 cur_data['cid'] = cat_id
-                if not cur_data['image'] or not cur_data['upc']:
+                if not (cur_data['image'] and cur_data['upc'] and
+                        cur_data['name']):
                     continue
                 desc = cur_data['shortDescription']
                 if desc and len(desc) > 512:
