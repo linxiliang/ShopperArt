@@ -23,10 +23,10 @@ class Command(BaseCommand):
         """Handle command."""
         pids = []
         for index, product in enumerate(Product.objects.all()):
-            if index % 100 == 0 and pids:
+            if index % 10 == 0 and pids:
                 print('getting====>', pids)
                 self.get_products_price(pids)
-                if index % 200 == 0:
+                if index % 20 == 0:
                     time.sleep(1)
                 pids = []
             else:
