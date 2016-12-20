@@ -3,3 +3,4 @@ django
 requests
 pyquery
 djangorestframework
+ipython
