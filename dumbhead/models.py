@@ -33,7 +33,7 @@ class PriceHistory(Document):
 
     website = StringField(max_length=20, required=True)
     pid = StringField(max_length=20, required=True)
-    price = FloatField(required=True)
+    salePrice = FloatField(required=True)
     create_time = DateTimeField(default=datetime.datetime.now)
 
 
