@@ -22,7 +22,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         """Handle command."""
-        cats = Category.objects.filter(searched=False)
+        cats = list(Category.objects.filter(searched=False))
         for cat in cats:
             print('getting====>', cat.to_json())
             self.get_products_cat(cat.cid)
