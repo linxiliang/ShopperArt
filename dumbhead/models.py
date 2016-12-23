@@ -22,7 +22,7 @@ class Product(Document):
     pid = StringField(max_length=20, required=True, primary_key=True)
     cid = StringField(max_length=20, required=True)
     upc = StringField(max_length=20, required=True)
-    name = StringField(max_length=256, required=True)
+    name = StringField(max_length=512, required=True)
     image = StringField(max_length=256, required=True)
     manufacturer = StringField(max_length=256)
     modelNumber = StringField(max_length=64)
@@ -36,7 +36,7 @@ class WebsiteProduct(Document):
     website = StringField(max_length=20, required=True)
     pid = StringField(max_length=20, required=True)
     wpid = StringField(max_length=20, required=True)
-    name = StringField(max_length=256, required=True)
+    name = StringField(max_length=512, required=True)
     searched = BooleanField(default=False)
     create_time = DateTimeField(default=datetime.datetime.now)
 

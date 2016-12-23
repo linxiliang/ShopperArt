@@ -94,7 +94,7 @@ class Command(BaseCommand):
         record = WebsiteProduct.objects.filter(website=AMAZON, pid=pid).first()
         if not record:
             WebsiteProduct(
-                website=AMAZON, pid=pid, wpid=wpid, name=name).save()
+                website=AMAZON, pid=pid, wpid=wpid, name=name[:512]).save()
         else:
             record.wpid = wpid
             record.name = name
