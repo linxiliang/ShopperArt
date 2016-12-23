@@ -6,7 +6,7 @@ import base64
 import hashlib
 import urllib
 import requests
-import xml.etree.ElementTree as ET
+import untangle
 
 KEY = 'AKIAJIU4THDG4KYCA3KQ'
 SECRET = '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'
@@ -18,10 +18,10 @@ PARAMS = {
     'Operation': 'ItemSearch',
     # 'Operation': 'ItemLookup',
     # 'ItemId': 'B00VQR7MVQ',
-    'SearchIndex': 'PCHardware',
+    'SearchIndex': 'All',
     # 'ResponseGroup': 'ItemAttributes,Reviews',
     'Timestamp': '',
-    'Sort': 'psrank',
+    # 'Sort': 'psrank',
 }
 CATS = ['Electronics', 'PCHardware', 'Wireless']
 
@@ -75,13 +75,16 @@ def item_lookup(item_id):
 
 def parse_data(data):
     """Parse xml data."""
-    root = ET.fromstring(data.text)
-    print(root)
+    root = untangle.parse(data.text)
+    # print('===>', root.ItemSearchResponse.Items.Item)
+    # item = root.ItemSearchResponse.Items.Item[0]
+    # print('ASIN---->:', item.ASIN.cdata)
+    # print('Title---->', item.ItemAttributes.Title.cdata)
 
 
 if __name__ == '__main__':
     # test()
-    title = 'Apple MacBook Pro 13.3 128GB 8GB'
+    title = 'Apple MF839LL'
     keywords = title.replace('-', '').split()
     data = item_search(','.join(keywords))
     parse_data(data)

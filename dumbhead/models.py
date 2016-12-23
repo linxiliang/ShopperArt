@@ -24,8 +24,20 @@ class Product(Document):
     upc = StringField(max_length=20, required=True)
     name = StringField(max_length=256, required=True)
     image = StringField(max_length=256, required=True)
+    manufacturer = StringField(max_length=64)
     modelNumber = StringField(max_length=64)
     shortDescription = StringField(max_length=512)
+    create_time = DateTimeField(default=datetime.datetime.now)
+
+
+class WebsiteProduct(Document):
+    """website product info."""
+
+    website = StringField(max_length=20, required=True)
+    pid = StringField(max_length=20, required=True)
+    wpid = StringField(max_length=20, required=True)
+    name = StringField(max_length=256, required=True)
+    searched = BooleanField(default=False)
     create_time = DateTimeField(default=datetime.datetime.now)
 
 
