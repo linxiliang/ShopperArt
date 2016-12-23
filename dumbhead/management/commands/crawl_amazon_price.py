@@ -39,8 +39,10 @@ class Command(BaseCommand):
                 break
             random.shuffle(products)
             for product in products:
-                self.get_products(product.pid, product.wpid)
-                # product.searched = True
+                flag = self.get_products(product.pid, product.wpid)
+                if flag:
+                    product.searched = True
+                    product.save()
 
     def get_products(self, pid, wpid):
         """Get products by keywords."""
@@ -69,6 +71,7 @@ class Command(BaseCommand):
             flag = self.parse_data(pid, data)
         if count >= 5:
             print('failed product----->', data.text)
+        return flag
 
     def parse_data(self, pid, data):
         """Parse xml data."""
