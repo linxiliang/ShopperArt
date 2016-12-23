@@ -31,19 +31,26 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         """Handle command."""
-        products = list(Product.objects.all())
-        for product in products:
-            if not product.modelNumber:
-                continue
-            keywords = [product.manufacturer, product.modelNumber]
-            flag = False
-            count = 1
-            while not flag and count <= 5:
-                flag = self.get_products(product.id, ','.join(keywords))
-                count += 1
-                time.sleep(1)
-            if count == 5:
-                print('failed product----->', keywords)
+        while True:
+            web_pids = set([p.pid for p in WebsiteProduct.objects.all()])
+            pids = set([p.id for p in Product.objects.all()
+                        if p.modelNumber is not None])
+            print('to crawl size---->', len(pids - web_pids))
+            if not (pids - web_pids):
+                break
+            products = list(Product.objects.all())
+            for product in products:
+                if product.id in web_pids or not product.modelNumber:
+                    continue
+                keywords = [product.manufacturer, product.modelNumber]
+                flag = False
+                count = 1
+                while not flag and count <= 5:
+                    flag = self.get_products(product.id, ','.join(keywords))
+                    count += 1
+                    time.sleep(1)
+                if count == 5:
+                    print('failed product----->', keywords)
 
     def get_products(self, pid, keywords):
         """Get products by keywords."""
