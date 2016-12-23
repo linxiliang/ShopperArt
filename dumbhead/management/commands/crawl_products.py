@@ -11,7 +11,7 @@ KEY = 'mQG1n4CF8F7YfvGtyAoMQdGY'
 EXTRA = '&format=json&sort=salesRankMediumTerm.asc'
 PARAM = 'show={show}&apiKey={key}&pageSize={size}&page={num}'
 SEARCH_URL = HOST + PARAM + EXTRA
-ATTRIBUTES = ['sku', 'name', 'upc', 'shortDescription', 'image']
+ATTRIBUTES = ['sku', 'name', 'upc', 'shortDescription', 'image', 'modelNumber']
 
 
 class Command(BaseCommand):

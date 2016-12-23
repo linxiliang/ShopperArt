@@ -1,7 +1,7 @@
 """Dumbhead views."""
 import json
 from django.http import HttpResponse
-from .bestbuy_api import item_lookup, keyword_search
+from .core import item_lookup, keyword_search
 
 
 def index(request):
