@@ -40,7 +40,7 @@ class Command(BaseCommand):
             if not (pids - web_pids):
                 break
             products = list(Product.objects.all())
-            random.suffle(products)
+            random.shuffle(products)
             for product in products:
                 if product.id in web_pids or not product.modelNumber:
                     continue
