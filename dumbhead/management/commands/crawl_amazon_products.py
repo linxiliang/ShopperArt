@@ -2,6 +2,7 @@
 import copy
 import hmac
 import time
+import random
 import base64
 import hashlib
 import urllib
@@ -39,6 +40,7 @@ class Command(BaseCommand):
             if not (pids - web_pids):
                 break
             products = list(Product.objects.all())
+            random.suffle(products)
             for product in products:
                 if product.id in web_pids or not product.modelNumber:
                     continue
@@ -76,7 +78,6 @@ class Command(BaseCommand):
     def parse_data(self, pid, data):
         """Parse xml data."""
         if 'ItemSearchErrorResponse' in data.text:
-            print(data.text)
             return False
         root = untangle.parse(data.text)
         total_num = int(root.ItemSearchResponse.Items.TotalResults.cdata)
