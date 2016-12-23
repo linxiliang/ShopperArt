@@ -43,14 +43,7 @@ class Command(BaseCommand):
                 if product.id in web_pids or not product.modelNumber:
                     continue
                 keywords = [product.manufacturer, product.modelNumber]
-                flag = False
-                count = 1
-                while not flag and count <= 5:
-                    flag = self.get_products(product.id, ','.join(keywords))
-                    count += 1
-                    time.sleep(1)
-                if count >= 5:
-                    print('failed product----->', keywords)
+                self.get_products(product.id, ','.join(keywords))
 
     def get_products(self, pid, keywords):
         """Get products by keywords."""
@@ -70,8 +63,15 @@ class Command(BaseCommand):
             hashlib.sha256).digest()).decode('utf-8')
         param_list.append('Signature=' + urllib.request.quote(sig))
         param_str = '&'.join(param_list)
-        data = requests.get(URL + param_str)
-        return self.parse_data(pid, data)
+        flag = False
+        count = 1
+        while not flag and count <= 5:
+            data = requests.get(URL + param_str)
+            count += 1
+            time.sleep(1)
+            flag = self.parse_data(pid, data)
+        if count >= 5:
+            print('failed product----->', keywords, data.text)
 
     def parse_data(self, pid, data):
         """Parse xml data."""
@@ -85,7 +85,7 @@ class Command(BaseCommand):
         elif total_num > 1:
             item = root.ItemSearchResponse.Items.Item[0]
         else:
-            return
+            return True
         wpid = item.ASIN.cdata
         name = item.ItemAttributes.Title.cdata
         print('ASIN---->:', wpid)
