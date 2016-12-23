@@ -44,7 +44,8 @@ class Command(BaseCommand):
                 continue
             total_num = min(MAXPAGE, data['totalPages'])
             for product in data['products']:
-                cur_data = {key: product[key] for key in ATTRIBUTES[1:]}
+                cur_data = {key: product.get(key, None)
+                            for key in ATTRIBUTES[1:]}
                 cur_data['cid'] = cat_id
                 if not (cur_data['image'] and cur_data['upc'] and
                         cur_data['name']):
