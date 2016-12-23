@@ -24,7 +24,7 @@ class Product(Document):
     upc = StringField(max_length=20, required=True)
     name = StringField(max_length=256, required=True)
     image = StringField(max_length=256, required=True)
-    manufacturer = StringField(max_length=64)
+    manufacturer = StringField(max_length=256)
     modelNumber = StringField(max_length=64)
     shortDescription = StringField(max_length=512)
     create_time = DateTimeField(default=datetime.datetime.now)
