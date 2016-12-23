@@ -49,7 +49,7 @@ class Command(BaseCommand):
                     flag = self.get_products(product.id, ','.join(keywords))
                     count += 1
                     time.sleep(1)
-                if count == 5:
+                if count >= 5:
                     print('failed product----->', keywords)
 
     def get_products(self, pid, keywords):
