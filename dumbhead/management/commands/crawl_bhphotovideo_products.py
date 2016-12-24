@@ -1,4 +1,5 @@
 """Script for crawling bhphotovideo products."""
+import time
 import random
 import requests
 from pyquery import PyQuery
@@ -31,6 +32,7 @@ class Command(BaseCommand):
                     continue
                 keywords = [product.manufacturer, product.modelNumber]
                 self.get_products(product.id, keywords)
+                time.sleep(1)
 
     def get_products(self, pid, keywords):
         """Get products by keywords."""
