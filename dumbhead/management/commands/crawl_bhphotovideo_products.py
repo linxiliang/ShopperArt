@@ -35,13 +35,13 @@ class Command(BaseCommand):
         """Get products by keywords."""
         try:
             re = PyQuery(url=HOST.format(keywords='+'.join(keywords)))
+            wpid = re('.sku')[0].text
+            brand = re('.bold.fourteen')('span')[0].text
+            title = re('.bold.fourteen')('span')[1].text
+            price = float(re('.price')[0].text.strip()[1:])
         except Exception:
             print(HOST.format(keywords='+'.join(keywords)))
             return
-        wpid = re('.sku')[0].text
-        brand = re('.bold.fourteen')('span')[0].text
-        title = re('.bold.fourteen')('span')[1].text
-        price = float(re('.price')[0].text.strip()[1:])
         name = brand + ' ' + title
         print('get---->', pid, name, price)
         record = WebsiteProduct.objects.filter(website=BP, pid=pid).first()
