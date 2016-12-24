@@ -1,5 +1,6 @@
 """Script for crawling bhphotovideo products."""
 import random
+import requests
 from pyquery import PyQuery
 from django.core.management.base import BaseCommand
 from dumbhead.models import Product, WebsiteProduct, PriceHistory
@@ -41,6 +42,9 @@ class Command(BaseCommand):
             price = float(re('.price')[0].text.strip()[1:])
         except Exception as e:
             print(HOST.format(keywords='+'.join(keywords)), e)
+            data = requests.get(HOST.format(keywords='+'.join(keywords)))
+            if data.status_code == 403:
+                print(data.text)
             return
         name = brand + ' ' + title
         print('get---->', pid, name, price)
