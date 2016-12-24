@@ -39,8 +39,8 @@ class Command(BaseCommand):
             brand = re('.bold.fourteen')('span')[0].text
             title = re('.bold.fourteen')('span')[1].text
             price = float(re('.price')[0].text.strip()[1:])
-        except Exception:
-            print(HOST.format(keywords='+'.join(keywords)))
+        except Exception as e:
+            print(HOST.format(keywords='+'.join(keywords)), e)
             return
         name = brand + ' ' + title
         print('get---->', pid, name, price)
